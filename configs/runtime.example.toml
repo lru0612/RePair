@@ -1,0 +1,78 @@
+workers = 4
+
+[paths]
+output_root = "./outputs"
+index = "./data/index"
+warm_start_questions = "./data/questions/warm_start.jsonl"
+training_questions = "./data/questions/training.jsonl"
+test_questions = "./data/questions/test.jsonl"
+warm_sft = "./data/warm_start/sft.jsonl.gz"
+handwritten_codebook = "./data/codebooks/handwritten.json"
+pairs_dir = "./data/pairs"
+codebooks_dir = "./data/codebooks"
+budget_inputs = "./data/budget_inputs.json"
+
+[models]
+base_14b = "Qwen/Qwen3-14B"
+base_8b = "Qwen/Qwen3-8B"
+
+[artifacts]
+# Set an entry only when using a model outside outputs/<arm>/training/model.
+A1 = ""
+A1_8b = ""
+A4 = ""
+
+[services.policy]
+backend = "vllm"
+base_url = "http://localhost:8000/v1"
+model = "repair-policy"
+artifact = "A1"
+api_key_env = ""
+timeout_seconds = 300
+transport_retries = 2
+
+[services.teacher]
+backend = "chat"
+base_url = "https://api.example.com/v1"
+model = "kimi-k3"
+api_key_env = "REPAIR_TEACHER_API_KEY"
+thinking_field = "enable_thinking"
+supports_repetition_penalty = true
+timeout_seconds = 300
+transport_retries = 2
+
+[services.warm_teacher]
+backend = "chat"
+base_url = "https://api.example.com/v1"
+model = "deepseek-v4-pro"
+api_key_env = "REPAIR_TEACHER_API_KEY"
+thinking_field = "enable_thinking"
+supports_repetition_penalty = true
+timeout_seconds = 300
+transport_retries = 2
+
+[services.reader]
+backend = "chat"
+base_url = "https://api.example.com/v1"
+model = "deepseek-v4-flash"
+api_key_env = "REPAIR_READER_API_KEY"
+thinking_field = "enable_thinking"
+timeout_seconds = 300
+transport_retries = 2
+
+[services.consolidator]
+backend = "chat"
+base_url = "https://api.example.com/v1"
+model = "gpt-5.6-sol"
+api_key_env = "REPAIR_CONSOLIDATOR_API_KEY"
+thinking_field = "enable_thinking"
+timeout_seconds = 300
+transport_retries = 2
+
+[services.judge]
+backend = "chat"
+base_url = "https://api.example.com/v1"
+model = "gpt-oss-120b"
+api_key_env = "REPAIR_JUDGE_API_KEY"
+timeout_seconds = 300
+transport_retries = 2

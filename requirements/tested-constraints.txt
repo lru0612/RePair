@@ -1,0 +1,11 @@
+# Install a CUDA-compatible PyTorch build before these constraints.
+transformers==4.51.3
+peft==0.15.2
+accelerate==1.6.0
+safetensors==0.8.0
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.7.2
+bm25s==0.2.14
+PyStemmer==2.2.0.3
+httpx==0.28.1

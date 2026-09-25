@@ -1,0 +1,8 @@
+seed = 12345
+
+[experiment]
+id = "D2"
+name = "budget"
+kind = "budget"
+size = 14
+upstream = "A3"
