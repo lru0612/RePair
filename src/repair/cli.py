@@ -33,12 +33,23 @@ def parser() -> argparse.ArgumentParser:
     index.add_argument("--corpus", type=Path, required=True)
     index.add_argument("--output", type=Path, required=True)
     index.add_argument("--tokenizer", required=True)
+    questions = commands.add_parser(
+        "questions", help="Recover the split questions from the official BrowseComp-Plus release"
+    )
+    questions.add_argument("--splits", type=Path, default=Path("data/splits.json"))
+    questions.add_argument("--output", type=Path, default=Path("data/questions"))
     return result
 
 
 def main(argv: list[str] | None = None) -> None:
     arguments = parser().parse_args(argv)
     try:
+        if arguments.command == "questions":
+            from repair.questions import official_questions, write_questions
+
+            result = write_questions(arguments.splits, arguments.output, official_questions())
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return
         config = load_experiment(arguments.experiment)
         if arguments.command == "check":
             runtime = load_runtime(arguments.runtime) if arguments.runtime else {}

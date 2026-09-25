@@ -1,14 +1,16 @@
 # Data contents
 
-Data is provided separately in `RePair-data.zip`. Extract it into the repository root so
-that `data/` sits alongside `src/` and `configs/`. The code repository does not bundle these
-data files.
+Data is provided separately in `RePair-data.zip`, a password-protected archive (see the
+README). Extract it into the repository root so that `data/` sits alongside `src/` and
+`configs/`, then run `repair questions` to recover the question files from the official
+BrowseComp-Plus release. The code repository does not bundle these data files, and the
+archive does not contain benchmark questions or answers in plain text.
 
 The data bundle contains only inputs needed for training, retrieval, and evaluation:
 
 ```text
 data/
-  questions/
+  questions/            # written by `repair questions`, not in the archive
     warm_start.jsonl
     training.jsonl
     test.jsonl
@@ -42,7 +44,7 @@ original filename and creation time.
 
 | Input | Fields |
 | --- | --- |
-| Question | `id`, `question`, `answer` |
+| Question (recovered) | `id`, `question`, `answer` |
 | Split | Lists of question IDs under `warm_start`, `training`, and `test` |
 | Warm-start sample | `dataset`, `query_id`, `prompt.system`, `prompt.user`, `completion` |
 | Preference | `query_id`, `rubric_id`, `prompt.system`, `prompt.user`, `chosen`, `rejected` |

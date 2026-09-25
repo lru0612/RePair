@@ -3,8 +3,8 @@
 The five groups are 14B handwritten, 14B induced, 14B self-play, 8B handwritten, and 8B induced.
 Self-play has two rounds, so these groups correspond to six training arms: A2–A7.
 
-See [data contents](data.md) for the bundled questions, index, demonstrations, codebooks,
-and preference files. Model weights and the raw collection pools below are separate.
+See [data contents](data.md) for the question splits, index, demonstrations, codebooks,
+and preference files; the questions themselves are recovered with `repair questions`. Model weights and the raw collection pools below are separate.
 
 ## Shared inputs
 

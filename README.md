@@ -8,20 +8,30 @@ includes handwritten and induced codebook experiments, two rounds of learner-gen
 SFT controls, rubric-subset ablations, evaluation, and token accounting.
 
 The experiment recipes follow the paper's experimental setup. Data is distributed separately
-as `RePair-data.zip`. The archive contains the `data/` directory with questions and splits,
-warm-start demonstrations, fixed codebooks, A2–A7 preferences, and a losslessly compressed
-retrieval index. Model weights and external model services are separate.
+as `RePair-data.zip`. The archive contains the `data/` directory with the question splits
+(identifiers only), warm-start demonstrations, fixed codebooks, A2–A7 preferences, and a
+losslessly compressed retrieval index. Model weights and external model services are separate.
 
 ## Data attachment
 
-Place `RePair-data.zip` next to the code directory and extract it from the repository root:
+Download `RePair-data.zip` from <DATA_URL> and place it next to the code directory.
+BrowseComp-Plus asks that its questions and answers never appear as plain text online, so the
+archive is password-protected and contains no question files. Extract it from the repository
+root with the password `RePair-BrowseComp-Plus`, then recover the questions from the official
+release:
 
 ```bash
-unzip ../RePair-data.zip -d .
+unzip -P RePair-BrowseComp-Plus ../RePair-data.zip -d .
+python -m pip install -e ".[questions]"
+repair questions
 ```
 
-This creates `data/` alongside `configs/`, `experiments/`, and `src/`. The default paths in
-`configs/runtime.example.toml` then point to the extracted files. See [data contents](docs/data.md).
+This creates `data/` alongside `configs/`, `experiments/`, and `src/`. `repair questions`
+downloads [Tevatron/browsecomp-plus](https://huggingface.co/datasets/Tevatron/browsecomp-plus),
+decrypts it with the benchmark's canary, and writes `data/questions/{warm_start,training,test}.jsonl`
+in the order of `data/splits.json`. `sha256sum -c data/SHA256SUMS` checks every file,
+the recovered questions included. The default paths in `configs/runtime.example.toml` then point to the extracted
+files. See [data contents](docs/data.md). Please do not redistribute the extracted files.
 
 ## Installation
 
@@ -70,7 +80,7 @@ and `train` for A1 or A1_8b using the included warm-start demonstrations. Altern
 
 The A2–A7 `train` stages use the included preference files when no newly generated pair file
 exists for that arm. A4 is trained before A5 because A5 starts from A4's exported model.
-Evaluation uses the included test questions and index. See [data contents](docs/data.md)
+Evaluation uses the recovered test questions and the included index. See [data contents](docs/data.md)
 for file formats and the scope of reproduction.
 
 ## Running an experiment
