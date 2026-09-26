@@ -14,7 +14,18 @@ losslessly compressed retrieval index. Model weights and external model services
 
 ## Data attachment
 
-Download `RePair-data.zip` from <DATA_URL> and place it next to the code directory.
+Download `RePair-data.zip` (2.8 GB) from
+[Google Drive](https://drive.google.com/file/d/1lVR89vMiGyG8__7dz6_ouwO8zxWonnWp/view?usp=sharing)
+and place it next to the code directory. The browser shows a virus-scan notice for files of
+this size; choose "Download anyway". From a terminal:
+
+```bash
+python -m pip install gdown
+gdown 1lVR89vMiGyG8__7dz6_ouwO8zxWonnWp -O ../RePair-data.zip
+shasum -a 256 ../RePair-data.zip
+# 86c72cc528d3569bb85297568471005da29040304950a20685cc4405eb1eb7fa
+```
+
 BrowseComp-Plus asks that its questions and answers never appear as plain text online, so the
 archive is password-protected and contains no question files. Extract it from the repository
 root with the password `RePair-BrowseComp-Plus`, then recover the questions from the official
@@ -29,9 +40,10 @@ repair questions
 This creates `data/` alongside `configs/`, `experiments/`, and `src/`. `repair questions`
 downloads [Tevatron/browsecomp-plus](https://huggingface.co/datasets/Tevatron/browsecomp-plus),
 decrypts it with the benchmark's canary, and writes `data/questions/{warm_start,training,test}.jsonl`
-in the order of `data/splits.json`. `sha256sum -c data/SHA256SUMS` checks every file,
-the recovered questions included. The default paths in `configs/runtime.example.toml` then point to the extracted
-files. See [data contents](docs/data.md). Please do not redistribute the extracted files.
+in the order of `data/splits.json`. `sha256sum -c data/SHA256SUMS` (`shasum -a 256 -c` on
+macOS) checks every file, the recovered questions included. The default paths in
+`configs/runtime.example.toml` then point to the extracted files. See
+[data contents](docs/data.md). Please do not redistribute the extracted files.
 
 ## Installation
 
